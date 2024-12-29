@@ -1,0 +1,67 @@
+-- إنشاء واجهة المستخدم (GUI) وتعديل السرعة
+local function createSpeedUI()
+    -- الحصول على اللاعب
+    local player = game.Players.LocalPlayer
+    local playerGui = player.PlayerGui
+
+    -- إنشاء شاشة GUI
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Parent = playerGui
+
+    -- إنشاء إطار القائمة المنسدلة
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0, 300, 0, 200)
+    frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+    frame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    frame.Parent = screenGui
+
+    -- إضافة عنوان للقائمة
+    local label = Instance.new("TextLabel")
+    label.Text = "اختر السرعة:"
+    label.Size = UDim2.new(0, 280, 0, 50)
+    label.Position = UDim2.new(0, 10, 0, 10)
+    label.BackgroundTransparency = 1
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.TextScaled = true
+    label.Parent = frame
+
+    -- إنشاء شريط التمرير (Slider) لزيادة السرعة
+    local sliderIncrease = Instance.new("TextButton")
+    sliderIncrease.Size = UDim2.new(0, 280, 0, 50)
+    sliderIncrease.Position = UDim2.new(0, 10, 0, 70)
+    sliderIncrease.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+    sliderIncrease.Text = "زيادة السرعة"
+    sliderIncrease.TextColor3 = Color3.fromRGB(255, 255, 255)
+    sliderIncrease.Parent = frame
+
+    -- إنشاء شريط التمرير (Slider) لتقليل السرعة
+    local sliderDecrease = Instance.new("TextButton")
+    sliderDecrease.Size = UDim2.new(0, 280, 0, 50)
+    sliderDecrease.Position = UDim2.new(0, 10, 0, 130)
+    sliderDecrease.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    sliderDecrease.Text = "تقليل السرعة"
+    sliderDecrease.TextColor3 = Color3.fromRGB(255, 255, 255)
+    sliderDecrease.Parent = frame
+
+    -- إعداد السرعة الافتراضية
+    local currentSpeed = 16
+
+    -- تعديل السرعة عند الضغط على الأزرار
+    sliderIncrease.MouseButton1Click:Connect(function()
+        currentSpeed = currentSpeed + 5
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = currentSpeed
+        print("تم زيادة السرعة إلى: " .. currentSpeed)
+    end)
+
+    sliderDecrease.MouseButton1Click:Connect(function()
+        currentSpeed = currentSpeed - 5
+        if currentSpeed < 0 then
+            currentSpeed = 0
+        end
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = currentSpeed
+        print("تم تقليل السرعة إلى: " .. currentSpeed)
+    end)
+end
+
+-- استدعاء دالة إنشاء واجهة المستخدم
+createSpeedUI()
